@@ -7,7 +7,6 @@ class UserSerializer(serializers.ModelSerializer):
     farmers = serializers.PrimaryKeyRelatedField(many=True, queryset=Farmer.objects.all())
     products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
     certificates = serializers.PrimaryKeyRelatedField(many=True, queryset=Certificate.objects.all())
-    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = User
