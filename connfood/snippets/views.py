@@ -4,6 +4,20 @@ from snippets.models import Farmer, Product, Certificate
 from snippets.serializers import FarmerSerializer, ProductSerializer, CertificateSerializer, UserSerializer
 from snippets.permissions import IsOwnerOrReadOnly
 from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
+from rest_framework.response import Response
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'farmers': reverse('farmer-list', request=request, format=format),
+        'products': reverse('product-list', request=request, format=format),
+        'certificates': reverse('certificate-list', request=request, format=format),
+
+    })
 
 
 class FarmerList(generics.ListCreateAPIView):
