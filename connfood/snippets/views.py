@@ -1,5 +1,4 @@
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions, filters
 from snippets.models import Farmer, Product, Certificate
 from snippets.serializers import FarmerSerializer, ProductSerializer, CertificateSerializer, UserSerializer
 from snippets.permissions import IsOwnerOrReadOnly
@@ -45,6 +44,8 @@ class CertificateViewSet(viewsets.ModelViewSet):
     serializer_class = CertificateSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['certificate_type']
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
