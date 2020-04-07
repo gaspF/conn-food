@@ -18,7 +18,7 @@ class FarmerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Farmer
-        fields = '__all__'
+        fields = ['url', 'id', 'owner', 'farmer_name', 'farmer_siret_number', 'farmer_address']
 
 
 class CertificateSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class CertificateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Certificate
-        fields = '__all__'
+        fields = ['url', 'id', 'owner', 'certificate_name', 'certificate_name', 'certificate_type', 'certified_farmer']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -37,4 +37,4 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['url', 'id', 'owner', 'product_name', 'product_unit', 'international_food_code', 'producers']
