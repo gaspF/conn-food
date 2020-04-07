@@ -32,7 +32,7 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    owner = serializers.SlugRelatedField(read_only=True, slug_field='username')
+    owner = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
     producers = serializers.SlugRelatedField(many=True, slug_field='farmer_name', queryset=Farmer.objects.all())
 
     class Meta:
