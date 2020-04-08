@@ -15,10 +15,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class FarmerSerializer(serializers.ModelSerializer):
     owner = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
+    certificate_products = serializers.HyperlinkedIdentityField(view_name='farmer-highlight', format='html')
 
     class Meta:
         model = Farmer
-        fields = ['url', 'id', 'owner', 'farmer_name', 'farmer_siret_number', 'farmer_address']
+        fields = ['url', 'id', 'owner', 'farmer_name', 'farmer_siret_number', 'farmer_address', 'certificate_products']
 
 
 class CertificateSerializer(serializers.ModelSerializer):

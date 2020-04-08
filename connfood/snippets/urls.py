@@ -11,4 +11,5 @@ router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('farmers/<int:pk>/certificate_products/', views.CertificateProductList.as_view(), name='farmer-highlight'),
 ]

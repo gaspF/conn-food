@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
+from drf_multiple_model.views import ObjectMultipleModelAPIView
+from drf_multiple_model.pagination import MultipleModelLimitOffsetPagination
 
 
 @api_view(['GET'])
@@ -49,6 +51,25 @@ class CertificateViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class LimitPagination(MultipleModelLimitOffsetPagination):
+    default_limit = 2
+
+
+class CertificateProductList(ObjectMultipleModelAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+    pagination_class = LimitPagination
+
+    def get_querylist(self):
+        pk = self.kwargs.get('pk')
+        querylist = [
+            {'queryset': Product.objects.filter(producers=pk), 'serializer_class': ProductSerializer},
+            {'queryset': Certificate.objects.filter(certified_farmer=pk), 'serializer_class': CertificateSerializer},
+        ]
+
+        return querylist
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
