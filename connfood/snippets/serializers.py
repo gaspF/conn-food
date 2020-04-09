@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Data serializer of User model.
+    """
+
     farmers = serializers.PrimaryKeyRelatedField(many=True, queryset=Farmer.objects.all())
     products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
     certificates = serializers.PrimaryKeyRelatedField(many=True, queryset=Certificate.objects.all())
@@ -14,6 +18,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class FarmerSerializer(serializers.ModelSerializer):
+    """
+    Data serializer of Farmer model. The SlugRelatedField displays a verbose name of the user, instead of it's ID.
+    """
+
     owner = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
     certificate_products = serializers.HyperlinkedIdentityField(view_name='farmer-highlight', format='html')
 
@@ -23,6 +31,10 @@ class FarmerSerializer(serializers.ModelSerializer):
 
 
 class CertificateSerializer(serializers.ModelSerializer):
+    """
+    Data serializer of Certificate model.
+    """
+
     certified_farmer = serializers.SlugRelatedField(slug_field='farmer_name', queryset=Farmer.objects.all())
     owner = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
     certificate_type = serializers.ChoiceField(choices=CERTIFICATE_CHOICES, default='ORIGINE')
@@ -33,6 +45,10 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    """
+    Data serializer of Product model.
+    """
+
     owner = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
     producers = serializers.SlugRelatedField(many=True, slug_field='farmer_name', queryset=Farmer.objects.all())
 

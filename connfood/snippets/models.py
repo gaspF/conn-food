@@ -8,6 +8,10 @@ CERTIFICATE_CHOICES = (
 
 
 class Farmer(models.Model):
+    """
+    Data model of a Farmer instance
+    """
+
     owner = models.ForeignKey('auth.User', related_name='farmers', on_delete=models.CASCADE)
     farmer_creation_date = models.DateTimeField(auto_now_add=True)
     farmer_name = models.CharField(max_length=100, blank=False)
@@ -22,6 +26,10 @@ class Farmer(models.Model):
 
 
 class Product(models.Model):
+    """
+    Data model of a Product instance
+    """
+
     owner = models.ForeignKey('auth.User', related_name='products', on_delete=models.CASCADE)
     product_creation_date = models.DateTimeField(auto_now_add=True)
     product_name = models.CharField(max_length=100, blank=False)
@@ -37,6 +45,10 @@ class Product(models.Model):
 
 
 class Certificate(models.Model):
+    """
+    Data model of a Certificate instance
+    """
+
     owner = models.ForeignKey('auth.User', related_name='certificates', on_delete=models.CASCADE)
     certificate_creation_date = models.DateTimeField(auto_now_add=True)
     certificate_name = models.CharField(max_length=100, blank=False)

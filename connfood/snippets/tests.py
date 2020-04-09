@@ -6,6 +6,10 @@ from django.contrib.auth.models import User
 
 
 class URLTests(APITestCase, URLPatternsTestCase):
+    """
+    Testing URL by checking it's response code and it's length.
+    """
+
     urlpatterns = [
         path('api/', include('snippets.urls')),
     ]
@@ -36,6 +40,11 @@ class URLTests(APITestCase, URLPatternsTestCase):
 
 
 class CreateDataTestCase(APITestCase):
+    """
+    Testing Data instance creation by generating one for each of them, and checking with a count() method if it
+    has been saved into database
+    """
+
     def setUp(self):
         self.user = User()
         self.user.username = "gaspf"

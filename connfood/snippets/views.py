@@ -22,6 +22,11 @@ def api_root(request, format=None):
 
 
 class FarmerViewSet(viewsets.ModelViewSet):
+    """
+    Displaying the farmer-list view, by selecting all of the Farmer objects and serializing them with FarmerSerializer
+    class. Only the creator can edit it's data.
+    """
+
     queryset = Farmer.objects.all()
     serializer_class = FarmerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
@@ -32,15 +37,29 @@ class FarmerViewSet(viewsets.ModelViewSet):
 
 
 class LimitPagination(MultipleModelLimitOffsetPagination):
+    """
+    This class set a pagination limit to the class CertificateProductList.
+    """
+
     default_limit = 2
 
 
 class CertificateProductList(ObjectMultipleModelAPIView):
+    """
+    Displaying the farmer-highlight view, by grouping all of the products and certificates instances related to a
+    specific farmer in a querylist, and displaying it on a unique view.
+    """
+
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
     pagination_class = LimitPagination
 
     def get_querylist(self):
+        """
+        This method get the primary key of a farmer by catching it from the URL argument, and setting it as a filter
+        criteria.
+        """
+
         pk = self.kwargs.get('pk')
         querylist = [
             {'queryset': Product.objects.filter(producers=pk), 'serializer_class': ProductSerializer},
@@ -51,6 +70,11 @@ class CertificateProductList(ObjectMultipleModelAPIView):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    """
+    Displaying the Product view,  by selecting all of the Product objects and serializing them with ProductSerializer
+    class. Only the creator can edit it's data.
+    """
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
@@ -61,6 +85,11 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class CertificateViewSet(viewsets.ModelViewSet):
+    """
+    Displaying the Certificate view,  by selecting all of the Certificate objects and serializing them with
+    CertificateSerializer class. Only the creator can edit it's data.
+    """
+
     queryset = Certificate.objects.all()
     serializer_class = CertificateSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
@@ -73,5 +102,10 @@ class CertificateViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Displaying the User view,  by selecting all of the User objects and serializing them with
+    UserSerializer class.
+    """
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
